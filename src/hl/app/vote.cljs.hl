@@ -1,0 +1,41 @@
+(page "vote.html"
+      (:require [tailrecursion.hoplon.storage-atom :refer [local-storage]]
+                [app.rpc :as rpc :refer [state]]))
+
+(defc= all-votes (:all-votes state))
+(defc= options (:options state))
+
+(def my-votes (cell #{}))
+(def max-votes 2)
+
+(defc= votes-remaining (- max-votes (count my-votes)))
+
+(rpc/init)
+
+(html
+ (head
+  (link :rel "stylesheet" :href "http://yui.yahooapis.com/pure/0.4.2/pure-min.css")
+  (link :rel "stylesheet" :href "css/app.css"))
+ (body
+  (div :class "pure-g content"
+       (h2 :class "pure-u-1 l-box" (text "You have ~{votes-remaining} votes remaining"))
+       (loop-tpl :bindings [i options]
+                 (div :class "pure-g pure-u-1 l-box"
+                      (div :class "pure-u-3-5"
+                           (span :class "title" (:title @i))
+                           (span :class "description"(:description @i)))
+                      (div :class "pure-u-1-5"
+                           (span :class "votes" (text "~(or (all-votes (:title i)) 0)")))
+                      (let [voted (cell= (if (my-votes (:title i)) true false))]
+                        (button
+                         :class (cell= {:pure-u-1-5 true
+                                        :pure-button true
+                                        :button-vote (not voted)
+                                        :button-unvote voted})
+                         :on-click #(let [direction (if @voted :down :up)
+                                          action (if @voted disj conj)
+                                          ok-to-vote (or (> @votes-remaining 0) @voted)]
+                                      (when ok-to-vote
+                                        (rpc/vote! (:title @i) direction)
+                                        (swap! my-votes action (:title @i))))
+                         (text "~(if voted \"Unvote\" \"Vote\")"))))))))

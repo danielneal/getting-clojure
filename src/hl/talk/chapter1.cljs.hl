@@ -1,0 +1,38 @@
+(ns talk.chapter1
+    (:require [hoplon.reveal :refer [chapter slide notes bullet highlight n-column-table two-column-table]]
+              [talk.sample-code :as sample-code]))
+
+(defn slides []
+  (chapter :title "Reading Clojure: Data Structures"
+           (slide :title "Vectors"
+                  (sample-code/vector-example)
+                  (two-column-table
+                   :title "Performance Characteristics"
+                   (p "Retrieve by index") (p "O(1)")))
+           (slide :title "Maps"
+                  (sample-code/map-example)
+                  (two-column-table
+                   :title "Performance Characteristics"
+                   (p "Retrieve by key") (p "O(1)")))
+           (slide :title "Sets"
+                  (sample-code/set-example)
+                  (two-column-table
+                   :title "Performance Characteristics"
+                   (p "First,Rest") (p "O(1)")
+                   (p "nth") (p "O(n)")))
+           (slide :title "List"
+                  (sample-code/list-example)
+                  (two-column-table
+                   :title "Performance Characteristice"
+                   (p "First,Rest") (p "O(1)")
+                   (p "nth") (p "O(n)")))
+
+           (slide :title "Further Information"
+                  (let [link "https://skillsmatter.com/skillscasts/3743-the-persistent-data-structure-menagerie#video"]
+                    (div
+                     (a :href link
+                        (img :src "img/philip-potter.png" :width "400px"))
+                     (p link))))))
+
+
+

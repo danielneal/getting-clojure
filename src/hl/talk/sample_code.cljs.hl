@@ -1,0 +1,33 @@
+(ns talk.sample-code
+  (:require [hoplon.reveal :refer [highlight]]))
+
+(defn vector-example []
+  (highlight
+    ;;{{
+    (def a-vector [1 2 3 "xyz" 4])
+    ;;}}
+   ))
+
+(defn map-example []
+  (highlight
+   ;;{{
+   (def a-map {:a 1 :b 2 :c "34r"})
+   (def a-nested-map {:a [1 2 {:b [3 4]} 5 6]})
+   ;;}}
+   ))
+
+
+(defn list-example []
+  (highlight
+    ;;{{
+    (def a-list '(1 2 3 4))
+    ;;}}
+   ))
+
+(defn set-example []
+  (highlight
+   ;;{{
+   (def fruit #{:banana :apple :pear})
+   (def animals #{:cat :dog :marmot})
+   ;;}}
+   ))

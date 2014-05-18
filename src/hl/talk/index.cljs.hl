@@ -1,0 +1,16 @@
+(page "index.html"
+      (:require [hoplon.reveal :refer [slideshow intro bullet]]
+                [talk.preamble :as preamble]
+                [talk.chapter1 :as ch1]))
+(html
+ (head
+  (script :src "reveal.js/lib/js/head.min.js" :type "text/javascript")
+  (script :src "reveal.js/js/reveal.min.js" :type "text/javascript")
+  (link :rel "stylesheet" :href "css/talk.css"))
+(body
+  (slideshow :theme "moon"
+             (intro :title "Getting Clojure"
+                    (bullet "Daniel Neal")
+                    (bullet "Functional Brighton, May 20 2014"))
+             (preamble/slides)
+             (ch1/slides))))

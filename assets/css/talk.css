@@ -1,0 +1,24 @@
+table.reveal.talk {
+  border-top-style:solid;
+  border-width:1px;
+  border-color:#eeeeee;
+  width:60%;
+  margin:auto;
+}
+
+table.reveal.talk caption {
+  margin:20px;
+}
+table.reveal.talk tr {
+  margin:auto;
+  border-bottom-style: 1px;
+}
+table.reveal.talk tr td {
+  text-align:center;
+  padding:20px;
+}
+
+table.reveal.talk tr td:first-child {
+  text-align:left;
+}
+

@@ -1,0 +1,17 @@
+(ns talk.preamble
+    (:require [hoplon.reveal :refer [chapter slide notes bullet]]
+              [talk.sample-code :as sample-code]))
+
+(defn slides []
+  (chapter :title "Preamble"
+           (slide :title "The surface level"
+                  (img :src "img/sea.jpg"))
+           (slide :title "The depths")
+           (slide
+            (img :src "img/coral-reef.jpg"))
+           (slide
+            (img :src "img/angler-fish.jpg"))
+           (slide :title "To do list"
+                  (ol (li "Learn to read (Clojure)")
+                      (li "Build a web app in Clojure and ClojureScript")
+                      (li "Explore the big wide Clojure world")))))
