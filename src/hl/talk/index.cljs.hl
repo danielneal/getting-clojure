@@ -14,7 +14,8 @@
   (slideshow :theme "moon"
              (intro :title "Getting Clojure"
                     (bullet "Daniel Neal")
-                    (bullet "Functional Brighton, May 20 2014"))
+                    (bullet "Functional Brighton, May 20th 2014")
+                    (bullet "https://github.com/danielneal/functional-brighton-talk"))
              (preamble/slides)
              (ch1/slides)
              (ch2/slides)

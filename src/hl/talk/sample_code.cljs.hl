@@ -65,16 +65,16 @@
    ;;{{
    (def my-thing [3 1 4 1 5 9 2 6 5])
 
-   (defn put-down [digit]
-     (dec digit))
+   (defn put-down [digits]
+     (map dec digits))
 
-   (defn flip [digit]
-     (- 10 digit))
+   (defn flip [digits]
+     (map #(- 10 %) digits))
 
    (defn put-my-thing-down-flip-it-and-reverse-it [thing]
      (reverse (flip (put-down thing))))
 
-   (defn put-my-thing-down-flip-it-and-reverse-it [thing]
+   (defn put-my-thing-down-flip-it-and-reverse-it-m [thing]
      (->> thing
           (put-down)
           (flip)
