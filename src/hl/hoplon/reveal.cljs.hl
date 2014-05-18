@@ -121,4 +121,5 @@
 
 (defelem highlight
   [attrs children]
-  (pre (code attrs children)))
+  (let [line-count (count (clojure.string/split children #"\\n"))]
+    (pre (code (if (< line-count 3) (merge {:class "big-code"} attrs) attrs) children))))

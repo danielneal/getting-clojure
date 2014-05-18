@@ -1,0 +1,13 @@
+(ns talk.chapter4
+    (:require [hoplon.reveal :refer [chapter slide notes bullet highlight n-column-table two-column-table]]
+              [talk.sample-code :as sample-code]))
+
+(defn slides []
+  (chapter :title "Reading Clojure: State"
+           (slide (img :src "img/mutability-kitten.png" :width "60%"))
+           (slide :title "Atoms"
+                  (bullet "Atoms provide shared, synchronous independent state. And watches")
+                  (sample-code/atoms))
+           (slide :title "Refs, Agents"
+                  (img :src "img/yoga.png"))))
+

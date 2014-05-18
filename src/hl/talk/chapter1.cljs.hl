@@ -8,25 +8,25 @@
                   (sample-code/vector-example)
                   (two-column-table
                    :title "Performance Characteristics"
-                   (p "Retrieve by index") (p "O(1)")))
+                   (p "Retrieve by index") (p "Near-constant")
+                   (p "append") (p "O(1)")))
            (slide :title "Maps"
                   (sample-code/map-example)
                   (two-column-table
                    :title "Performance Characteristics"
-                   (p "Retrieve by key") (p "O(1)")))
+                   (p "Retrieve by key") (p "Near-constant")))
            (slide :title "Sets"
                   (sample-code/set-example)
                   (two-column-table
                    :title "Performance Characteristics"
-                   (p "First,Rest") (p "O(1)")
-                   (p "nth") (p "O(n)")))
+                   (p "contains? check") (p "Near-constant")))
            (slide :title "List"
                   (sample-code/list-example)
                   (two-column-table
                    :title "Performance Characteristice"
-                   (p "First,Rest") (p "O(1)")
+                   (p "conj (prepend)") (p "O(1)")
+                   (p "first,rest") (p "O(1)")
                    (p "nth") (p "O(n)")))
-
            (slide :title "Further Information"
                   (let [link "https://skillsmatter.com/skillscasts/3743-the-persistent-data-structure-menagerie#video"]
                     (div

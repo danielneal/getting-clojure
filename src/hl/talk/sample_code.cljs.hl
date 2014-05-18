@@ -3,9 +3,9 @@
 
 (defn vector-example []
   (highlight
-    ;;{{
-    (def a-vector [1 2 3 "xyz" 4])
-    ;;}}
+   ;;{{
+   (def a-vector [1 2 3 "xyz" 4])
+   ;;}}
    ))
 
 (defn map-example []
@@ -16,12 +16,11 @@
    ;;}}
    ))
 
-
 (defn list-example []
   (highlight
-    ;;{{
-    (def a-list '(1 2 3 4))
-    ;;}}
+   ;;{{
+   (def a-list '(1 2 3 4))
+   ;;}}
    ))
 
 (defn set-example []
@@ -31,3 +30,190 @@
    (def animals #{:cat :dog :marmot})
    ;;}}
    ))
+
+(defn syntax-example []
+  (highlight
+   ;;{{
+   '(+ 4 (* 5 6) 3 4) ;=> (+ 4 (* 5 6) 3 4)
+   (+ 4 (* 5 6) 3 4) ;=> 41
+   ;;}}
+   ))
+
+(defn function-example []
+  (highlight
+   ;;{{
+   (defn verbify
+     "Add 'ing' to a word"
+     [word] (str word "ing"))
+
+   (verbify "bowl")
+
+   (def verbify #(str % "ing"))
+
+   (defn title-case [sentence]
+     (let [capitalize #(apply str (clojure.string/upper-case (first %)) (rest %))
+           words (clojure.string/split sentence #"\s")]
+       (clojure.string/join " " (map capitalize words))))
+
+   (title-case (str "the story of how we went " (verbify "bowl")))
+   ;;}}
+   ))
+
+
+(defn macro-example []
+  (highlight
+   ;;{{
+   (def my-thing [3 1 4 1 5 9 2 6 5])
+
+   (defn put-down [digit]
+     (dec digit))
+
+   (defn flip [digit]
+     (- 10 digit))
+
+   (defn put-my-thing-down-flip-it-and-reverse-it [thing]
+     (reverse (flip (put-down thing))))
+
+   (defn put-my-thing-down-flip-it-and-reverse-it [thing]
+     (->> thing
+          (put-down)
+          (flip)
+          (reverse)))
+   ;;}}
+   ))
+
+(defn destructuring-example []
+  (highlight
+   ;;{{
+   (let [[head & tail] [1 2 3 4 5]]
+     (into [head] (reverse tail)))
+
+   (def point1 {:x 100 :y 200})
+   (def point2 {:x 150 :y 300})
+
+   (let [{x :x} point1]
+     x)
+
+   (defn gradient [{x1 :x y1 :y :as point1}
+                   {x2 :x y2 :y :as point2}]
+     (/ (- y2 y1) (- x2 x1)))
+   ;;}}
+   ))
+
+(defn the-expression-problem-oop []
+  (highlight
+   ;;{{
+   public class Square {
+    private float length
+    public float Area {return Math.pow(length,2)}
+    public Square (float l) {length=l}
+   }
+
+   public class Circle {
+    private float radius;
+    public float Area() {return pi*Math.pow(radius,2)}
+    public Circle (float r) {radius=r}
+    }
+   ;;}}
+   ))
+
+(defn the-expression-problem-functional []
+  (highlight
+   ;;{{
+   (defrecord Square [length])
+   (defrecord Circle [radius])
+
+   (defn area [shape]
+    (condp = (type shape)
+      Square (Math/pow (:length shape) 2)
+      Circle (* 3.14 (Math/pow (:radius shape) 2))))
+   ;;}}
+   ))
+
+(defn multimethods []
+  (highlight
+   ;;{{
+   (def pi 3.14)
+
+   (defmulti area (fn [x] (type x)))
+
+   (defmethod area Circle
+     [{:keys [radius]}]
+     (* pi (Math/pow radius 2)))
+
+   (defmethod area Square
+     [{:keys [length]}]
+     (Math/pow length 2))
+
+   (defrecord Triangle [base height])
+
+   (defmethod area Triangle
+     [{:keys [base height]}]
+     (/ (* base height) 2))
+
+   (defmulti perimeter (fn [x] (type x))) ;; and so on
+  ;;}}
+  ))
+
+(defn protocols []
+  (highlight
+   ;;{{
+   (defprotocol IArea
+     (area* [this]))
+
+   (defprotocol IPerimeter
+     (perimeter* [this]))
+
+   (extend-protocol IArea
+     Circle
+     (area* [{:keys [radius]}] (* pi (Math/pow radius 2))))
+
+   (extend-type Square
+     IArea
+     (area [{:keys [length]}] (Math/pow length 2))
+
+     IPerimeter
+     (perimeter [{:keys [length]}] (* length 4)))
+   ;;}}
+   ))
+
+(defn datastructures-as-functions []
+  (highlight
+   ;;{{
+   ;; maps - look up value by key
+   ({:a 1 :b 2} :a)
+
+   ;; vectors - look up by index
+   ([0 1 2 3 4 5] 2)
+
+   ;; sets - contains? - returns nil or value
+   (#{:a :b :c} :c)
+
+   ;; but because any value is truth-y, can use like this
+   (remove #{1} [0 1 2 0 1 2 0 1 2 0 1 2])
+   ;;}}
+   ))
+
+
+(defn atoms []
+  (highlight
+   ;;{{
+   (def state (atom
+               {"bob" {:lives-left 3 :fruit #{"banana" "apple"}}
+                "jerry" {:lives-left 2 :fruit #{"apple"} :power-ups #{"juicer"}}}))
+
+   (defn lose-a-life [player]
+     (swap! state update-in [player :lives-left] dec))
+
+   (add-watch state :game-over-check
+              (fn [k r new-value old-value]
+                (let [losers (->> (for [[player {lives-left :lives-left}] new-value]
+                                    [player lives-left])
+                                  (filter (fn [[_ lives-left]] (<= lives-left 0)))
+                                  (map first))]
+                  (doseq [player losers]
+                    (println (format "%s is out" player))))))
+   (lose-a-life "bob")
+   ;;}}
+   ))
+

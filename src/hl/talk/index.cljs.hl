@@ -1,7 +1,10 @@
 (page "index.html"
-      (:require [hoplon.reveal :refer [slideshow intro bullet]]
+      (:require [hoplon.reveal :refer [slideshow intro bullet slide]]
                 [talk.preamble :as preamble]
-                [talk.chapter1 :as ch1]))
+                [talk.chapter1 :as ch1]
+                [talk.chapter2 :as ch2]
+                [talk.chapter3 :as ch3]
+                [talk.chapter4 :as ch4]))
 (html
  (head
   (script :src "reveal.js/lib/js/head.min.js" :type "text/javascript")
@@ -13,4 +16,10 @@
                     (bullet "Daniel Neal")
                     (bullet "Functional Brighton, May 20 2014"))
              (preamble/slides)
-             (ch1/slides))))
+             (ch1/slides)
+             (ch2/slides)
+             (ch3/slides)
+             (ch4/slides)
+             (slide
+              :title "Now let's build a web app to decide what to do next"
+              (a :href "vote.html" (bullet "Go!"))))))

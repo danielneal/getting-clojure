@@ -2,12 +2,13 @@
       (:require [tailrecursion.hoplon.storage-atom :refer [local-storage]]
                 [app.rpc :as rpc :refer [state]]))
 
+(def max-votes 2)
+(def my-votes (-> (cell #{}) (local-storage ::store)))
+
 (defc= all-votes (:all-votes state))
 (defc= options (:options state))
-
-(def my-votes (cell #{}))
-(def max-votes 2)
-
+(defc= sorted-options
+  (reverse (sort-by #(all-votes (:title %) 0) options)))
 (defc= votes-remaining (- max-votes (count my-votes)))
 
 (rpc/init)
@@ -19,11 +20,11 @@
  (body
   (div :class "pure-g content"
        (h2 :class "pure-u-1 l-box" (text "You have ~{votes-remaining} votes remaining"))
-       (loop-tpl :bindings [i options]
+       (loop-tpl :bindings [i sorted-options]
                  (div :class "pure-g pure-u-1 l-box"
                       (div :class "pure-u-3-5"
-                           (span :class "title" (:title @i))
-                           (span :class "description"(:description @i)))
+                           (span :class "title" (cell= (:title i)))
+                           (span :class "description" (cell= (:description i))))
                       (div :class "pure-u-1-5"
                            (span :class "votes" (text "~(or (all-votes (:title i)) 0)")))
                       (let [voted (cell= (if (my-votes (:title i)) true false))]

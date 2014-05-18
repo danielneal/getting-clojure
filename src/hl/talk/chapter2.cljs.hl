@@ -1,0 +1,17 @@
+(ns talk.chapter2
+    (:require [hoplon.reveal :refer [chapter slide notes bullet highlight n-column-table two-column-table]]
+              [talk.sample-code :as sample-code]))
+
+(defn slides []
+  (chapter :title "Reading Clojure: Evaluation"
+           (slide :title "The List (revisited)"
+                  (sample-code/syntax-example))
+           (slide :title "Functions"
+                  (sample-code/function-example))
+           (slide :title "Macros"
+                  (sample-code/macro-example))
+           (slide :title "Special Forms"
+                  (p "def | if | do | loop | recur | quote | var | fn | throw | try | catch | let ")
+                  (sample-code/destructuring-example))))
+
+
